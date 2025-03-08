@@ -1,0 +1,104 @@
+import os
+
+#task 1 
+
+def list_items(path):
+    directories = [d for d in os.listdir(path) if os.path.isdir(os.path.join(path, d))]
+    files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+    
+    print("Directories:", directories)
+    print("Files:", files)
+    print("All:", directories + files)
+
+path = "."
+list_items(path)
+
+#task 2
+def check_access(path):
+    print("Exists:", os.path.exists(path))
+    print("Readable:", os.access(path, os.R_OK))
+    print("Writable:", os.access(path, os.W_OK))
+    print("Executable:", os.access(path, os.X_OK))
+
+path = "test.txt" 
+check_access(path)
+
+path = "example/numbers.txt" 
+check_access(path)
+
+#task 3
+
+def path_info(path):
+    if os.path.exists(path):
+        print("Path exists!")
+        print("Directory:", os.path.dirname(path))
+        print("Filename:", os.path.basename(path))
+    else:
+        print("Path does not exist.")
+
+path = "example/numbers.txt"
+path_info(path)
+
+#task 4
+
+def count_lines(filename):
+    with open(filename, "r") as f:
+        return sum(1 for _ in f)
+
+filename = "example/numbers.txt" 
+print("Number of lines:", count_lines(filename))
+
+
+#task 5
+
+def write_list_to_file(filename, lst):
+    with open(filename, "w") as f:
+        for item in lst:
+            f.write(str(item) + "\n")
+
+data = ["Apple", "Banana", "Cherry"]
+write_list_to_file("fruits.txt", data)
+
+
+# task6
+
+def copy_file(source, destination):
+    with open(source, "r") as src, open(destination, "w") as dest:
+        dest.write(src.read())
+
+copy_file("source.txt", "copied.txt")
+
+
+#task 7
+def delete_file(path):
+    try:
+        if os.path.exists(path):
+            if os.access(path, os.W_OK):
+                os.remove(path)
+                print(f"{path} deleted successfully.")
+            else:
+                print(f"No write access to delete {path}.")
+        else:
+            print("File does not exist.")
+    except Exception as e:
+        print(f"Error deleting file: {e}")
+
+delete_file("test.txt") 
+
+Directories: ['example', 'for_letters']
+Files: ['built-in_functions.ipynb', 'copied.txt', 'files.ipynb', 'fruits.txt', 'source.txt']
+All: ['example', 'for_letters', 'built-in_functions.ipynb', 'copied.txt', 'files.ipynb', 'fruits.txt', 'source.txt']
+Exists: False
+Readable: False
+Writable: False
+Executable: False
+Exists: True
+Readable: True
+Writable: True
+Executable: True
+Path exists!
+Directory: example
+Filename: numbers.txt
+Number of lines: 16
+File does not exist.
+
